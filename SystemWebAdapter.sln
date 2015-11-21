@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWebAdapter", "SystemWebAdapter\SystemWebAdapter.csproj", "{07277169-BCA9-42BD-951D-2431ABF5A4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemWebAdapter.Sample", "SystemWebAdapter.Sample\SystemWebAdapter.Sample.csproj", "{0BF33623-EA23-4073-9548-15A781FB3264}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07277169-BCA9-42BD-951D-2431ABF5A4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07277169-BCA9-42BD-951D-2431ABF5A4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07277169-BCA9-42BD-951D-2431ABF5A4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07277169-BCA9-42BD-951D-2431ABF5A4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BF33623-EA23-4073-9548-15A781FB3264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF33623-EA23-4073-9548-15A781FB3264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF33623-EA23-4073-9548-15A781FB3264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF33623-EA23-4073-9548-15A781FB3264}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
