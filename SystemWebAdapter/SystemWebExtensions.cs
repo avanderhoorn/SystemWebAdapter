@@ -10,7 +10,12 @@ namespace SystemWebAdapter
     {
         public static Microsoft.AspNet.Http.HttpContext CreateContext(this System.Web.HttpContext systemWebHttpContext)
         {
-            return new Microsoft.AspNet.Http.Internal.DefaultHttpContext(new Microsoft.AspNet.Http.Features.FeatureCollection(new SystemWebFeatureCollection(systemWebHttpContext)));
+            return systemWebHttpContext.CreateContext(null);
+        }
+
+        public static Microsoft.AspNet.Http.HttpContext CreateContext(this System.Web.HttpContext systemWebHttpContext, IServiceProvider serviceProvider)
+        {
+            return new Microsoft.AspNet.Http.Internal.DefaultHttpContext(new Microsoft.AspNet.Http.Features.FeatureCollection(new SystemWebFeatureCollection(systemWebHttpContext, serviceProvider)));
         }
     }
 }

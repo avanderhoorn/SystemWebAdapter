@@ -29,18 +29,22 @@ namespace SystemWebAdapter
         ITlsConnectionFeature,
         IHttpSendFileFeature,
         IHttpAuthenticationFeature,
-        IItemsFeature//,
+        IItemsFeature,
+        IServiceProvidersFeature//,
         //IHttpWebSocketFeature,
     {
         private readonly System.Web.HttpContext _httpContext;
         private readonly System.Web.HttpRequest _httpRequest;
         private readonly System.Web.HttpResponse _httpResponse;
 
-        public SystemWebFeatureCollection(System.Web.HttpContext httpContext)
+        public SystemWebFeatureCollection(System.Web.HttpContext httpContext, IServiceProvider serviceProvider)
         {
             _httpContext = httpContext;
             _httpRequest = httpContext.Request;
             _httpResponse = httpContext.Response;
+            
+            ApplicationServices = serviceProvider;
+            RequestServices = serviceProvider;
         }
 
         // IHttpRequestFeature
@@ -292,6 +296,16 @@ namespace SystemWebAdapter
             set { }
         }
 
+        // IServiceProvidersFeature
+        public IServiceProvider ApplicationServices { get; set; } // TODO: Removed in RC2
+
+        public IServiceProvider RequestServices { get; set; }
+
+        public bool SupportsServiceProvider
+        {
+            get { return ApplicationServices != null || RequestServices != null; }
+        }
+
         // IFeatureCollection
         public int Revision
         {
@@ -319,7 +333,11 @@ namespace SystemWebAdapter
                 {
                     return SupportsClientCerts;
                 }
-                //else if (key == typeof(IHttpWebSocketFeature))
+                if (key == typeof (IServiceProvidersFeature))
+                {
+                    return SupportsServiceProvider;
+                }
+                //if (key == typeof(IHttpWebSocketFeature))
                 //{
                 //    return SupportsWebSockets;
                 //}
@@ -360,10 +378,14 @@ namespace SystemWebAdapter
             yield return new KeyValuePair<Type, object>(typeof(IHttpAuthenticationFeature), this);
             yield return new KeyValuePair<Type, object>(typeof(IItemsFeature), this);
 
-            //// Check for conditional features
+            // Check for conditional features
             if (SupportsClientCerts)
             {
                 yield return new KeyValuePair<Type, object>(typeof(ITlsConnectionFeature), this);
+            }
+            if (SupportsServiceProvider)
+            {
+                yield return new KeyValuePair<Type, object>(typeof(IServiceProvidersFeature), this);
             }
             //if (SupportsWebSockets)
             //{
