@@ -11,11 +11,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using SystemWebAdapter.Internal;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Features;
 using Microsoft.AspNet.Http.Features.Authentication;
 using Microsoft.AspNet.Http.Features.Internal;
-using Microsoft.AspNet.Http.Internal;
 
 namespace SystemWebAdapter
 {
@@ -104,10 +104,11 @@ namespace SystemWebAdapter
             get { return _requestHeaders ?? (_requestHeaders = new SystemWebHeaders(_httpRequest.Headers)); }
             set { }
         }
-        
+
+        private Stream _requestBody;
         Stream IHttpRequestFeature.Body
         {
-            get { return _httpRequest.InputStream; }
+            get { return _requestBody ?? (_requestBody = new InputStream(_httpRequest)); }
             set { }
         }
 
@@ -131,9 +132,10 @@ namespace SystemWebAdapter
             set { }
         }
 
+        private Stream _responseBody;
         Stream IHttpResponseFeature.Body
         {
-            get { return _httpResponse.OutputStream; }
+            get { return _responseBody ?? (_responseBody = new OutputStream(_httpResponse, null, null)); }
             set { }
         }
 

@@ -70,8 +70,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\DelegatingStream.cs" />
+    <Compile Include="Internal\InputStream.cs" />
     <Compile Include="Internal\ItemsCollection.cs" />
     <Compile Include="Internal\ItemsDictionary.cs" />
+    <Compile Include="Internal\OutputStream.cs" />
     <Compile Include="SystemWebExtensions.cs" />
     <Compile Include="SystemWebFeatureCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
