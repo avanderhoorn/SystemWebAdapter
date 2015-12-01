@@ -14,6 +14,8 @@ using System.Web;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Http.Features;
 using Microsoft.AspNet.Http.Features.Authentication;
+using Microsoft.AspNet.Http.Features.Internal;
+using Microsoft.AspNet.Http.Internal;
 
 namespace SystemWebAdapter
 {
@@ -26,7 +28,8 @@ namespace SystemWebAdapter
         IHttpRequestLifetimeFeature,
         ITlsConnectionFeature,
         IHttpSendFileFeature,
-        IHttpAuthenticationFeature//,
+        IHttpAuthenticationFeature,
+        IItemsFeature//,
         //IHttpWebSocketFeature,
     {
         private readonly System.Web.HttpContext _httpContext;
@@ -281,6 +284,14 @@ namespace SystemWebAdapter
             get; set;
         }
 
+        // IItemsFeature
+        private IDictionary<object, object> _items;
+        IDictionary<object, object> IItemsFeature.Items
+        {
+            get { return _items ?? (_items = new SystemWebAdapter.Internal.ItemsDictionary(_httpContext.Items)); }
+            set { }
+        }
+
         // IFeatureCollection
         public int Revision
         {
@@ -347,6 +358,7 @@ namespace SystemWebAdapter
             yield return new KeyValuePair<Type, object>(typeof(IHttpRequestLifetimeFeature), this);
             yield return new KeyValuePair<Type, object>(typeof(IHttpSendFileFeature), this);
             yield return new KeyValuePair<Type, object>(typeof(IHttpAuthenticationFeature), this);
+            yield return new KeyValuePair<Type, object>(typeof(IItemsFeature), this);
 
             //// Check for conditional features
             if (SupportsClientCerts)
@@ -362,6 +374,5 @@ namespace SystemWebAdapter
         public void Dispose()
         {
         }
-
     }
 }
