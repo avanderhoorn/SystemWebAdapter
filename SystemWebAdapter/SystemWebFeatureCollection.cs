@@ -31,7 +31,7 @@ namespace SystemWebAdapter
         IHttpAuthenticationFeature,
         IItemsFeature,
         IServiceProvidersFeature,
-        IHttpBufferingFeature//,
+        IHttpBufferingFeature
         //IHttpWebSocketFeature,
     {
         private readonly System.Web.HttpContext _httpContext;
