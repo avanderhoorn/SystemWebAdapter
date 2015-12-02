@@ -135,7 +135,7 @@ namespace SystemWebAdapter
         private Stream _responseBody;
         Stream IHttpResponseFeature.Body
         {
-            get { return _responseBody ?? (_responseBody = new OutputStream(_httpResponse, OnStart, null)); }
+            get { return _responseBody ?? (_responseBody = new OutputStream(_httpResponse, OnStart, (() => {}))); }
             set { }
         }
 
