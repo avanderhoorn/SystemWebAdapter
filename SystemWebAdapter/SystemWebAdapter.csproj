@@ -75,6 +75,7 @@
     <Compile Include="Internal\ItemsCollection.cs" />
     <Compile Include="Internal\ItemsDictionary.cs" />
     <Compile Include="Internal\OutputStream.cs" />
+    <Compile Include="Internal\SendingHeadersEvent.cs" />
     <Compile Include="SystemWebExtensions.cs" />
     <Compile Include="SystemWebFeatureCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

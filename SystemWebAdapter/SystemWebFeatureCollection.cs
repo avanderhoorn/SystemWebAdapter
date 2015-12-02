@@ -135,23 +135,57 @@ namespace SystemWebAdapter
         private Stream _responseBody;
         Stream IHttpResponseFeature.Body
         {
-            get { return _responseBody ?? (_responseBody = new OutputStream(_httpResponse, null, null)); }
+            get { return _responseBody ?? (_responseBody = new OutputStream(_httpResponse, OnStart, null)); }
             set { }
         }
 
         bool IHttpResponseFeature.HasStarted
         {
-            get { throw new NotSupportedException("HasStarted isn't yet supported"); }
+            get { return _hasStarted; }
         }
 
         void IHttpResponseFeature.OnStarting(Func<object, Task> callback, object state)
         {
-            throw new NotSupportedException("OnStarting isn't yet supported");
+            _sendingHeadersEvent.Register(
+                s => {
+                    // need to block on the callback since we can't change this signature to be async
+                    callback(s).GetAwaiter().GetResult();
+                }, state);
         }
 
         void IHttpResponseFeature.OnCompleted(Func<object, Task> callback, object state)
         {
             throw new NotSupportedException("OnCompleted isn't yet supported");
+        }
+
+        // Tracking - OnStarting/HasStarted
+        private readonly SendingHeadersEvent _sendingHeadersEvent = new SendingHeadersEvent();
+        private Exception _startException;
+        private bool _startCalled;
+        private object _startLock = new object();
+        private bool _hasStarted;
+
+        private void OnStart()
+        {
+            var exception = LazyInitializer.EnsureInitialized(ref _startException, ref _startCalled, ref _startLock, 
+                () => {
+                    try
+                    {
+                        _sendingHeadersEvent.Fire();
+                        _hasStarted = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex;
+                    }
+
+                    return null;
+                });
+
+            if (exception != null)
+            {
+                throw new InvalidOperationException(string.Empty, exception);
+            }
         }
 
         // IHttpConnectionFeature
