@@ -30,7 +30,8 @@ namespace SystemWebAdapter
         IHttpSendFileFeature,
         IHttpAuthenticationFeature,
         IItemsFeature,
-        IServiceProvidersFeature//,
+        IServiceProvidersFeature,
+        IHttpBufferingFeature//,
         //IHttpWebSocketFeature,
     {
         private readonly System.Web.HttpContext _httpContext;
@@ -342,6 +343,18 @@ namespace SystemWebAdapter
             get { return ApplicationServices != null || RequestServices != null; }
         }
 
+        // IHttpBufferingFeature
+        void IHttpBufferingFeature.DisableRequestBuffering()
+        {
+            var inputStream = (InputStream)((IHttpRequestFeature)this).Body;
+            inputStream.DisableBuffering();
+        }
+
+        void IHttpBufferingFeature.DisableResponseBuffering()
+        {
+            _httpResponse.BufferOutput = false;
+        }
+
         // IFeatureCollection
         public int Revision
         {
@@ -413,6 +426,7 @@ namespace SystemWebAdapter
             yield return new KeyValuePair<Type, object>(typeof(IHttpSendFileFeature), this);
             yield return new KeyValuePair<Type, object>(typeof(IHttpAuthenticationFeature), this);
             yield return new KeyValuePair<Type, object>(typeof(IItemsFeature), this);
+            yield return new KeyValuePair<Type, object>(typeof(IHttpBufferingFeature), this);
 
             // Check for conditional features
             if (SupportsClientCerts)
