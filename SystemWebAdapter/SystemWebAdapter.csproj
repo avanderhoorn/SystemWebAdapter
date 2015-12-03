@@ -79,8 +79,8 @@
     <Compile Include="SystemWebExtensions.cs" />
     <Compile Include="SystemWebFeatureCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemWebHeaders.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Internal\HeaderDictionary.cs" />
+    <Compile Include="Internal\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

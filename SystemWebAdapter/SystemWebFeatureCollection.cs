@@ -102,7 +102,7 @@ namespace SystemWebAdapter
         private IHeaderDictionary _requestHeaders;
         IHeaderDictionary IHttpRequestFeature.Headers
         {
-            get { return _requestHeaders ?? (_requestHeaders = new SystemWebHeaders(_httpRequest.Headers)); }
+            get { return _requestHeaders ?? (_requestHeaders = new HeaderDictionary(_httpRequest.Headers)); }
             set { }
         }
 
@@ -129,7 +129,7 @@ namespace SystemWebAdapter
         private IHeaderDictionary _responseHeaders;
         IHeaderDictionary IHttpResponseFeature.Headers
         {
-            get { return _responseHeaders ?? (_responseHeaders = new SystemWebHeaders(_httpResponse.Headers)); }
+            get { return _responseHeaders ?? (_responseHeaders = new HeaderDictionary(_httpResponse.Headers)); }
             set { }
         }
 

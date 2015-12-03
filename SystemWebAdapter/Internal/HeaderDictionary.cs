@@ -6,11 +6,11 @@ using System.Linq;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.Primitives;
 
-namespace SystemWebAdapter
+namespace SystemWebAdapter.Internal
 {
-    internal class SystemWebHeaders : IHeaderDictionary
+    public class HeaderDictionary : IHeaderDictionary
     {
-        public SystemWebHeaders(NameValueCollection headers)
+        public HeaderDictionary(NameValueCollection headers)
         {
             Headers = headers;
         }

@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace SystemWebAdapter
+namespace SystemWebAdapter.Internal
 {
     internal static class Utils
     {
